@@ -2,40 +2,61 @@ package javaposse.jobdsl.dsl.helpers.publisher
 
 import javaposse.jobdsl.dsl.helpers.Context
 
-class JabberContext implements Context {
-    String strategyName = 'ALL' // ALL,  FAILURE_AND_FIXED, ANY_FAILURE, STATECHANGE_ONLY
-    boolean notifyOnBuildStart = false
-    boolean notifySuspects = false
-    boolean notifyCulprits = false
-    boolean notifyFixers = false
-    boolean notifyUpstreamCommitters = false
-    String channelNotificationName = 'Default' // Default, SummaryOnly, BuildParameters, PrintFailingTests
+class SlackContext implements Context {
+    boolean notifyBuildStart = false
+    boolean notifyAborted = false
+    boolean notifyFailure = false
+    boolean notifyNotBuilt = false
+    boolean notifySuccess = false
+    boolean notifyUnstable = false
+    boolean notifyBackToNormal = false
 
-    void strategyName(String strategyName) {
-        this.strategyName = strategyName
+    String teamDomain
+    String integrationToken
+    String buildServerUrl
+    String channel
+
+    void setChannel(String channel) {
+        this.channel = channel
     }
 
-    void notifyOnBuildStart(boolean notifyOnBuildStart) {
-        this.notifyOnBuildStart = notifyOnBuildStart
+    void setNotifyBuildStart(boolean notifyBuildStart) {
+        this.notifyBuildStart = notifyBuildStart
     }
 
-    void notifySuspects(boolean notifySuspects) {
-        this.notifySuspects = notifySuspects
+    void setNotifyAborted(boolean notifyAborted) {
+        this.notifyAborted = notifyAborted
     }
 
-    void notifyCulprits(boolean notifyCulprits) {
-        this.notifyCulprits = notifyCulprits
+    void setNotifyFailure(boolean notifyFailure) {
+        this.notifyFailure = notifyFailure
     }
 
-    void notifyFixers(boolean notifyFixers) {
-        this.notifyFixers = notifyFixers
+    void setNotifyNotBuilt(boolean notifyNotBuilt) {
+        this.notifyNotBuilt = notifyNotBuilt
     }
 
-    void notifyUpstreamCommitters(boolean notifyUpstreamCommitters) {
-        this.notifyUpstreamCommitters = notifyUpstreamCommitters
+    void setNotifySuccess(boolean notifySuccess) {
+        this.notifySuccess = notifySuccess
     }
 
-    void channelNotificationName(String channelNotificationName) {
-        this.channelNotificationName = channelNotificationName
+    void setNotifyUnstable(boolean notifyUnstable) {
+        this.notifyUnstable = notifyUnstable
+    }
+
+    void setNotifyBackToNormal(boolean notifyBackToNormal) {
+        this.notifyBackToNormal = notifyBackToNormal
+    }
+
+    void setTeamDomain(String teamDomain) {
+        this.teamDomain = teamDomain
+    }
+
+    void setIntegrationToken(String integrationToken) {
+        this.integrationToken = integrationToken
+    }
+
+    void setBuildServerUrl(String buildServerUrl) {
+        this.buildServerUrl = buildServerUrl
     }
 }
