@@ -471,6 +471,11 @@ class PublisherContext implements Context {
      *     </publishers>
      * </job>
      */
+
+    void publishSlack(String room, String teamDomain, String authToken, String buildServerUrl, Closure slackClosure = null) {
+        publishSlack(room, teamDomain, authToken, buildServerUrl,false, true, false, true, true, true, true, slackClosure)
+    }
+
     void publishSlack(String room, String teamDomain, String authToken, String buildServerUrl,
                       boolean startNotification, boolean notifySuccess, boolean notifyAborted,
                       boolean notifyNotBuilt, boolean notifyUnstable, boolean notifyFailure,
