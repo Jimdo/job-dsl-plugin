@@ -448,6 +448,29 @@ class PublisherContext implements Context {
     Set<String> validJabberChannelNotificationNames = ['Default', 'SummaryOnly', 'BuildParameters', 'PrintFailingTests']
 
     /**
+     * <job>
+     *     <properties>
+     *         <jenkins.plugins.slack.SlackNotifier_-SlackJobProperty>
+     *             <room>#foobarbaz</room>
+     *             <startNotification>false</startNotification>
+     *             <notifySuccess>false</notifySuccess>
+     *             <notifyAborted>false</notifyAborted>
+     *             <notifyNotBuilt>false</notifyNotBuilt>
+     *             <notifyUnstable>false</notifyUnstable>
+     *             <notifyFailure>false</notifyFailure>
+     *             <notifyBackToNormal>false</notifyBackToNormal>
+     *         </jenkins.plugins.slack.SlackNotifier_-SlackJobProperty>
+     *     </properties>
+     *     <publishers>
+     *         <jenkins.plugins.slack.SlackNotifier>
+     *             <teamDomain>yourdomain</teamDomain>
+     *             <authToken>abcdefghijklmnopqrstuvwxyz</authToken>
+     *             <buildServerUrl>http://www.jenkins-ci.org/</buildServerUrl>
+     *             <room>#foobarbaz</room>
+     *         </jenkins.plugins.slack.SlackNotifier>
+     *     </publishers>
+     * </job>
+     */
      * <be.certipost.hudson.plugin.SCPRepositoryPublisher>
      *     <siteName>javadoc</siteName>
      *     <entries>
