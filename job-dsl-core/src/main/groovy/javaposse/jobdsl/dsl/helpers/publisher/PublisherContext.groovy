@@ -471,6 +471,56 @@ class PublisherContext implements Context {
      *     </publishers>
      * </job>
      */
+    void publishSlack(String room, String teamDomain, String authToken, String buildServerUrl,
+                      boolean startNotification, boolean notifySuccess, boolean notifyAborted,
+                      boolean notifyNotBuilt, boolean notifyUnstable, boolean notifyFailure,
+                      boolean notifyBackToNormal, Closure slackClosure = null) {
+        SlackContext slackContext = new SlackContext()
+
+        slackContext.room = room
+        slackContext.teamDomain = teamDomain
+        slackContext.authToken = authToken
+        slackContext.buildServerUrl = buildServerUrl
+
+        slackContext.startNotification = startNotification
+        slackContext.notifySuccess = notifySuccess
+        slackContext.notifyAborted = notifyAborted
+        slackContext.notifyNotBuilt = notifyNotBuilt
+        slackContext.notifyUnstable = notifyUnstable
+        slackContext.notifyFailure = notifyFailure
+        slackContext.notifyBackToNormal = notifyBackToNormal
+
+        ContextHelper.executeInContext(slackClosure, slackContext)
+
+        NodeBuilder nodeBuilder = NodeBuilder.newInstance()
+
+        /* --------- */
+        /* Okay, this has to be moved to somewhere else to match the properties node */
+        Node propertyNode = nodeBuilder.'jenkins.plugins.slack.SlackNotifier_-SlackJobProperty' {
+            room slackContext.room
+            startNotification slackContext.startNotification ? 'true' : 'false'
+            notifySuccess slackContext.notifySuccess ? 'true' : 'false'
+            notifyAborted slackContext.notifyAborted ? 'true' : 'false'
+            notifyNotBuilt slackContext.notifyNotBuilt ? 'true' : 'false'
+            notifyUnstable slackContext.notifyUnstable ? 'true' : 'false'
+            notifyFailure slackContext.notifyFailure ? 'true' : 'false'
+            notifyBackToNormal slackContext.notifyBackToNormal ? 'true' : 'false'
+        }
+
+        properties << propertyNode
+        /* --------- */
+
+        Node publishNode = nodeBuilder.'jenkins.plugins.slack.SlackNotifier' {
+            teamDomain slackContext.teamDomain
+            authToken slackContext.authToken
+            buildServerUrl slackContext.buildServerUrl
+            room slackContext.room
+        }
+
+        publisherNodes << publishNode
+    }
+
+    /**
      * <be.certipost.hudson.plugin.SCPRepositoryPublisher>
      *     <siteName>javadoc</siteName>
      *     <entries>
